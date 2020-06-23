@@ -5,9 +5,11 @@ import 'DomainSearch.dart';
 import 'EmailFinder.dart';
 import 'EmailVerification.dart';
 import 'EmailVerificationSaved.dart';
+import 'SavedEmails.dart';
 import 'circularButton.dart';
 import 'colorTheme.dart';
-import 'email_verification_api_call.dart';
+import 'local_db.dart';
+
 String appTitle = "Hunter.io";
 bool mode = false;
 
@@ -72,10 +74,33 @@ String InputDomain;
 getDomain(){
   return InputDomain;
 }
-setDomain(String domain) {
-  InputDomain = domain;
-}
+setDomain(String domain){
+  InputDomain= domain;
 
+}
+List<EmailAddress> savedMails;
+setSavedMails(List list){
+  savedMails = list;
+
+}
+getSavedMails(){
+  return savedMails;
+}
+List<String> tempSavedMails=[];
+getTempSavedMails(){
+  return tempSavedMails;
+}
+setTempSavedMails(List mails){
+  tempSavedMails=mails;
+}
+removeFromTempSavedList(String mail){
+  tempSavedMails.removeWhere((element) => element==mail);
+
+
+}
+addToTempSavedList(String mail){
+  tempSavedMails.add(mail);
+}
 class MaterialAppWithTheme extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -117,7 +142,6 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
   final _biggerFont = const TextStyle(fontSize: 18.0);
   AnimationController animationController,animationControllerSmallerFab;
   Animation degOneTranslationAnimation,mainButtonCliclTranslationAnimation,degOneTranslationAnimationScale,smallButtonCliclTranslationAnimation;
-  //final bool prawda = false;
 
 
 
@@ -126,6 +150,10 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
   }
   @override
   void initState(){
+    var dh = DBHelper();
+    dh.init();
+
+
     animationController= AnimationController(vsync:this,duration: Duration(milliseconds: 250));
     degOneTranslationAnimation = Tween(begin: 1.0, end: 0.0).animate(animationController);
     degOneTranslationAnimationScale= Tween(begin: 0.0, end: 1.0).animate(animationController);
@@ -138,21 +166,17 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
 
       });
     });
-    super.initState();
-  }
-  @override
-  void initState2(){
-    animationControllerSmallerFab= AnimationController(vsync:this,duration: Duration(milliseconds: 250));
-    smallButtonCliclTranslationAnimation= TweenSequence([
-      TweenSequenceItem<double>(tween: Tween<double>(begin: 1.0, end: 0.6),weight: 50),
-      TweenSequenceItem<double>(tween: Tween<double>(begin: 0.6, end: 1.0),weight: 50)
-    ]).animate(animationControllerSmallerFab);
-    animationControllerSmallerFab.addListener(() {
+    void dbTesting() async {
+      final list = await dh.emails();
       setState(() {
-
+        setSavedMails(list);
+        list.forEach((element) {addToTempSavedList(element.value.toString()); });
       });
-    });
+
+    }
+    dbTesting();
     super.initState();
+
   }
 
   void _pushSaved() {
@@ -295,15 +319,21 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                 ),
               )),
               customListTile(Icons.search,"Searched Domains",colorTheme().mailColor,(){setState(() {
+                setAppBody(DomainSearchLayout());
                 Navigator.of(context).pop();
               });}),
-              customListTile(Icons.perm_identity,"E-mails",colorTheme().domainColor,(){setState(() {
+              customListTile(Icons.perm_identity,"Found E-mails",colorTheme().domainColor,(){setState(() {
+                setAppBody(EmailFinderLayout());
                 Navigator.of(context).pop();
               });}),
               customListTile(Icons.verified_user,"Verified mails",colorTheme().verifieduserColor,(){setState(() {
 
-                setAppBody(EmailVerificationSaved());
+                setAppBody(EmailVerificationLayout());
                 Navigator.of(context).pop();
+              });}),
+              customListTile(Icons.star,"Saved E-mails",Colors.yellow,(){setState(() {
+                Navigator.of(context).pop();
+                setAppBody(EmailSaved());
               });})
             ],
           ),
@@ -542,11 +572,11 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                                         child: Text('Verify'),
                                         onPressed: () {setState(() {
                                           setEmail(myController.text);
+                                          if (czyPrawda.prawda == true) {
                                           setAppBody(EmailVerificationLayout());
-                                          Navigator.pop(context);
-//                                          if (emailVerificationApiCall.prawda == true) {
-//                                              setAppBody(EmailVerificationLayout());
-//                                              Navigator.pop(context);}
+                                          Navigator.pop(context);}
+//                                          setAppBody(EmailVerificationLayout());
+//                                          Navigator.pop(context);
                                         });
 
 
@@ -646,6 +676,6 @@ class customListTile extends StatelessWidget{
 
 }
 
-class czy200{
-  bool prawda = false;
+class czyPrawda {
+  static bool prawda = false;
 }

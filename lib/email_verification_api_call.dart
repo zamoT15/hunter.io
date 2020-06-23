@@ -7,7 +7,7 @@ import 'main.dart';
 import 'app_exceptions.dart';
 
 class emailVerificationApiCall {
-  static bool prawda = false;
+  //static bool prawda = false;
 
   static Future<EmailVerification> fetchVerif(
       String email, String apiKey) async {
@@ -18,6 +18,7 @@ class emailVerificationApiCall {
           await http.get(url + '?email=' + email + '&api_key=' + apiKey);
 
       if (response.statusCode == 200) {
+        czyPrawda.prawda = true;
         return EmailVerification.fromJson(json.decode(response.body));
       } else {
         responseVerification = _returnResponse(response);
