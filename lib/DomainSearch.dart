@@ -27,15 +27,15 @@ class DomainSearchState extends State<DomainSearchLayout> {
 
   @override
   Widget build(BuildContext context) {
-    String _Email;
+    String _Domain;
     String _ApiKey;
 
 
     setState(() {
-      _Email = getEmail();
+      _Domain = getDomain();
       _ApiKey = getApiKey();
       futureEmails = domainSearchApiCall.fetchEmails(
-          "stripe.com" ,  _ApiKey);
+          _Domain ,  _ApiKey);
     });
     return Scaffold(
       body: FutureBuilder<List<Email>>(

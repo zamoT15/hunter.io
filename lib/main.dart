@@ -79,6 +79,22 @@ getDomain(){
 setDomain(String domain){
   InputDomain= domain;
 
+String InputName;
+getName(){
+  return InputName;
+}
+setName(String name){
+  InputName = name;
+}
+
+String InputSurname;
+getSurname(){
+  return InputSurname;
+}
+setSurname(String surname){
+  InputSurname = surname;
+}
+
 }
 List<EmailAddress> savedMails;
 setSavedMails(List list){
@@ -140,8 +156,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
-  final myController = TextEditingController();
-  TextEditingController emailEditingController = TextEditingController();
+  final domainController = TextEditingController();
+  final emailEditingController = TextEditingController();
+  final nameController = TextEditingController();
+  final surnameController = TextEditingController();
   final _biggerFont = const TextStyle(fontSize: 18.0);
   AnimationController animationController,animationControllerSmallerFab;
   Animation degOneTranslationAnimation,mainButtonCliclTranslationAnimation,degOneTranslationAnimationScale,smallButtonCliclTranslationAnimation;
@@ -381,7 +399,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                                   return AlertDialog(
                                     content: SingleChildScrollView(
                                       child: TextField(
-                                        controller: myController,
+                                        controller: domainController,
                                         decoration: InputDecoration(
                                             border: OutlineInputBorder(),
                                             hintText: "company.com"
@@ -405,7 +423,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                                         child: Text('Find email adress'),
                                         onPressed: () {
                                           setState(() {
-                                            setEmail(myController.text);
+                                            setDomain(domainController.text);
                                             setAppBody(DomainSearchLayout());
                                             Navigator.pop(context);
                                           });
@@ -452,7 +470,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                                             child: Padding(
                                               padding: EdgeInsets.only(bottom: 8),
                                               child: TextField(
-                                                controller: myController,
+                                                controller: nameController,
                                                 decoration: InputDecoration(
                                                     border: OutlineInputBorder(),
                                                     labelText: "First name"
@@ -465,7 +483,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                                             child: Padding(
                                               padding: EdgeInsets.only(bottom: 8),
                                               child: TextField(
-                                                controller: myController,
+                                                controller: surnameController,
                                                 decoration: InputDecoration(
                                                     border: OutlineInputBorder(),
                                                     labelText: "Last name"
@@ -478,7 +496,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                                             child: Padding(
                                               padding: EdgeInsets.only(bottom: 8),
                                               child: TextField(
-                                                controller: myController,
+                                                controller: domainController,
                                                 decoration: InputDecoration(
                                                     border: OutlineInputBorder(),
                                                     labelText: "Domain"
@@ -507,6 +525,9 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                                         child: Text('Search'),
                                         onPressed: () {
                                           setState(() {
+                                           // setName(nameController.text);
+                                           // setSurname(surnameController.text);
+                                            setDomain(domainController.text);
                                             setAppBody(EmailFinderLayout());
                                             Navigator.of(context).pop();
                                           });
@@ -550,25 +571,25 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                                   return AlertDialog(
                                     content: SingleChildScrollView(
 
-                                      child: TextFormField(
+                                      child: TextField(
                                         controller: emailEditingController,
-                                        validator: (value) {
-                                          if (value.isEmpty) {
-                                            return 'Please enter a valid email address';
-                                          }
-                                          if (!value.contains('@')) {
-                                            return 'Email is invalid, must contain @';
-                                          }
-                                          if (!value.contains('.')) {
-                                            return 'Email is invalid, must contain .';
-                                          }
-                                          return null;
-                                        },
-                                        keyboardType: TextInputType.emailAddress,
+//                                        validator: (value) {
+//                                          if (value.isEmpty) {
+//                                            return 'Please enter a valid email address';
+//                                          }
+//                                          if (!value.contains('@')) {
+//                                            return 'Email is invalid, must contain @';
+//                                          }
+//                                          if (!value.contains('.')) {
+//                                            return 'Email is invalid, must contain .';
+//                                          }
+//                                          return null;
+//                                        },
                                         decoration: InputDecoration(
                                             border: OutlineInputBorder(),
                                             hintText: "johndoe@company.com"
                                         ),
+
                                       ),
                                     ),
                                     actions: <Widget>[
@@ -591,13 +612,13 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                                           setEmail(emailEditingController.text);
                                           setAppBody(EmailVerificationLayout());
 //                                          if (czyPrawda.prawda == false) {
-                                            Fluttertoast.showToast(
-                                                msg: czyPrawda.prawda.toString(),
-                                                toastLength: Toast.LENGTH_LONG,
-                                                gravity: ToastGravity.BOTTOM,
-                                                backgroundColor: Colors.blue,
-                                                textColor: Colors.white,
-                                                fontSize: 16.0);
+//                                            Fluttertoast.showToast(
+//                                                msg: czyPrawda.prawda.toString(),
+//                                                toastLength: Toast.LENGTH_LONG,
+//                                                gravity: ToastGravity.BOTTOM,
+//                                                backgroundColor: Colors.blue,
+//                                                textColor: Colors.white,
+//                                                fontSize: 16.0);
                                           Navigator.pop(context);
 ////                                          setAppBody(EmailVerificationLayout());
 ////                                          Navigator.pop(context);

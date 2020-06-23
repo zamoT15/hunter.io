@@ -27,13 +27,17 @@ class EmailFinderState extends State<EmailFinderLayout> {
   @override
   Widget build(BuildContext context) {
     final Set<EmailFinder> _saved = <EmailFinder>{};
-    String _Email;
+    String _Name;
+    String _Surname;
+    String _Domain;
     String _ApiKey;
     setState(() {
-      _Email = getEmail();
+     // _Name = getName();
+     // _Surname = getSurname();
+      _Domain = getDomain();
       _ApiKey = getApiKey();
     });
-    futureEmailFinder = fetchFinder("Dustin","Moskovitz","asana.com",_ApiKey);
+    futureEmailFinder = fetchFinder("Dustin","Moskovitz",_Domain,_ApiKey);
 
     return Scaffold(
       body: FutureBuilder<EmailFinder>(

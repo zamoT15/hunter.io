@@ -4,25 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'main.dart';
-import 'app_exceptions.dart';
+
 
 class emailVerificationApiCall {
 
   static Future<EmailVerification> fetchVerif(
       String email, String apiKey) async {
     String url = 'https://api.hunter.io/v2/email-verifier';
-   // var responseVerification;
     try {
       final http.Response response =
           await http.get(url + '?email=' + email + '&api_key=' + apiKey);
 
       if (response.statusCode == 200) {
-        czyPrawda.prawda = true;
+        //czyPrawda.prawda = true;
         return EmailVerification.fromJson(json.decode(response.body));
       } else {
-       return _returnResponse(response);
-        //responseVerification = _returnResponse(response);
-        //return responseVerification;
+        throw _returnResponse(response);
       }
     } on SocketException catch (e) {
       print('Socket Exception. Check your network status. \n$e');
