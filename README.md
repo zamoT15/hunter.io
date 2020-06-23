@@ -1,4 +1,3 @@
-# sprawdzam
 
 A new Flutter application.
 
