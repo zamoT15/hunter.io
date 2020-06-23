@@ -22,8 +22,8 @@ class emailVerification extends StatelessWidget {
 
 class EmailVerificationState extends State<EmailVerificationLayout> {
 
-  Future<EmailVerification> futureEmailVerification;
-  Future<List<Email>> futureEmails;
+ static Future<EmailVerification> futureEmailVerification;
+ static Future<List<Email>> futureEmails;
 
 
 

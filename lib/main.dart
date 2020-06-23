@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:sprawdzam/email_verification_api_call.dart';
 
 import 'DomainSearch.dart';
 import 'EmailFinder.dart';
@@ -139,6 +141,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
   final myController = TextEditingController();
+  TextEditingController emailEditingController = TextEditingController();
   final _biggerFont = const TextStyle(fontSize: 18.0);
   AnimationController animationController,animationControllerSmallerFab;
   Animation degOneTranslationAnimation,mainButtonCliclTranslationAnimation,degOneTranslationAnimationScale,smallButtonCliclTranslationAnimation;
@@ -546,8 +549,22 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                                 builder: (BuildContext context){
                                   return AlertDialog(
                                     content: SingleChildScrollView(
-                                      child: TextField(
-                                        controller: myController,
+
+                                      child: TextFormField(
+                                        controller: emailEditingController,
+                                        validator: (value) {
+                                          if (value.isEmpty) {
+                                            return 'Please enter a valid email address';
+                                          }
+                                          if (!value.contains('@')) {
+                                            return 'Email is invalid, must contain @';
+                                          }
+                                          if (!value.contains('.')) {
+                                            return 'Email is invalid, must contain .';
+                                          }
+                                          return null;
+                                        },
+                                        keyboardType: TextInputType.emailAddress,
                                         decoration: InputDecoration(
                                             border: OutlineInputBorder(),
                                             hintText: "johndoe@company.com"
@@ -571,12 +588,20 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                                         /* splashColor: Colors.blueAccent,*/
                                         child: Text('Verify'),
                                         onPressed: () {setState(() {
-                                          setEmail(myController.text);
-                                          if (czyPrawda.prawda == true) {
+                                          setEmail(emailEditingController.text);
                                           setAppBody(EmailVerificationLayout());
-                                          Navigator.pop(context);}
-//                                          setAppBody(EmailVerificationLayout());
-//                                          Navigator.pop(context);
+//                                          if (czyPrawda.prawda == false) {
+                                            Fluttertoast.showToast(
+                                                msg: czyPrawda.prawda.toString(),
+                                                toastLength: Toast.LENGTH_LONG,
+                                                gravity: ToastGravity.BOTTOM,
+                                                backgroundColor: Colors.blue,
+                                                textColor: Colors.white,
+                                                fontSize: 16.0);
+                                          Navigator.pop(context);
+////                                          setAppBody(EmailVerificationLayout());
+////                                          Navigator.pop(context);
+//                                        });
                                         });
 
 
