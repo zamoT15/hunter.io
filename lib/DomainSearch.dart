@@ -32,8 +32,8 @@ class DomainSearchState extends State<DomainSearchLayout> {
     setState(() {
       _Email = getEmail();
       _ApiKey = getApiKey();
-      futureEmails = fetchEmails(
-          "stripe.com" ,  _ApiKey);
+      futureEmails = domainSearchApiCall.fetchEmails(
+          "9y6t5r[][][" ,  _ApiKey);
     });
 
     return Scaffold(

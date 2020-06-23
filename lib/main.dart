@@ -7,6 +7,7 @@ import 'EmailVerification.dart';
 import 'EmailVerificationSaved.dart';
 import 'circularButton.dart';
 import 'colorTheme.dart';
+import 'email_verification_api_call.dart';
 String appTitle = "Hunter.io";
 bool mode = false;
 
@@ -71,10 +72,10 @@ String InputDomain;
 getDomain(){
   return InputDomain;
 }
-setDomain(String domain){
-  InputDomain= domain;
-
+setDomain(String domain) {
+  InputDomain = domain;
 }
+
 class MaterialAppWithTheme extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -116,6 +117,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
   final _biggerFont = const TextStyle(fontSize: 18.0);
   AnimationController animationController,animationControllerSmallerFab;
   Animation degOneTranslationAnimation,mainButtonCliclTranslationAnimation,degOneTranslationAnimationScale,smallButtonCliclTranslationAnimation;
+  //final bool prawda = false;
 
 
 
@@ -542,6 +544,9 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                                           setEmail(myController.text);
                                           setAppBody(EmailVerificationLayout());
                                           Navigator.pop(context);
+//                                          if (emailVerificationApiCall.prawda == true) {
+//                                              setAppBody(EmailVerificationLayout());
+//                                              Navigator.pop(context);}
                                         });
 
 
@@ -641,3 +646,6 @@ class customListTile extends StatelessWidget{
 
 }
 
+class czy200{
+  bool prawda = false;
+}

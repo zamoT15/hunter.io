@@ -37,8 +37,8 @@ class EmailVerificationState extends State<EmailVerificationLayout> {
       _Email = getEmail();
        _ApiKey = getApiKey();
     });
-    futureEmailVerification = fetchVerif(
-       "marcin.lawnik@polsl.pl",  _ApiKey);
+    futureEmailVerification = emailVerificationApiCall.fetchVerif(
+       "marcin.lawnipolsl.pl",  _ApiKey);
     return Scaffold(
      body: FutureBuilder<EmailVerification>(
        future: futureEmailVerification,
