@@ -8,8 +8,9 @@ class colorTheme{
   Color primaryColorDarkAccent = Colors.black12;
   Color primaryColorAccent = Colors.orangeAccent;
   Color mailColor = Colors.blue;
-  Color domainColor = Colors.green;
   Color verifieduserColor = Colors.orangeAccent;
+  Color domainColor = Colors.green;
+
 
 
 }

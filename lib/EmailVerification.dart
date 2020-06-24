@@ -1,12 +1,11 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
 import 'domain_search_api_call.dart';
 import 'email_verification_api_call.dart';
-import 'main.dart';
 import 'local_db.dart';
+import 'main.dart';
+
 
 
 class emailVerification extends StatelessWidget {

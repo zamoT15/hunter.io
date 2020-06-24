@@ -2,6 +2,7 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+
 class emailVerificationSaved extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

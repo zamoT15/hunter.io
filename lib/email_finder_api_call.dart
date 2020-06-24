@@ -62,7 +62,6 @@ dynamic _returnResponse(http.Response response) {
           backgroundColor: Colors.blue,
           textColor: Colors.white,
           fontSize: 16.0);
-  //throw EmailVerificationFailedException(response.body.toString());
     case 400:
       Fluttertoast.showToast(
           msg: "Your request was not valid.",

@@ -157,13 +157,13 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
   final domainController = TextEditingController();
-  final emailEditingController = TextEditingController();
+  TextEditingController emailEditingController = TextEditingController();
   final nameController = TextEditingController();
   final surnameController = TextEditingController();
   final _biggerFont = const TextStyle(fontSize: 18.0);
   AnimationController animationController,animationControllerSmallerFab;
   Animation degOneTranslationAnimation,mainButtonCliclTranslationAnimation,degOneTranslationAnimationScale,smallButtonCliclTranslationAnimation;
-
+  final _formKey = GlobalKey<FormState>();
 
 
   double getRadians (double degree){
@@ -334,7 +334,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                     child: Padding(
 
                       padding: EdgeInsets.all(17.0),
-                      child: Image.asset("images/hunterio.png",height: 100,width: 100,),
+                      child: Image.asset("images/hunterio.PNG",height: 100,width: 100,),
                     ),
                   ),
                 ),
@@ -570,21 +570,22 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                                 builder: (BuildContext context){
                                   return AlertDialog(
                                     content: SingleChildScrollView(
-
-                                      child: TextField(
+                                      key: _formKey,
+                                      child: TextFormField(
                                         controller: emailEditingController,
-//                                        validator: (value) {
-//                                          if (value.isEmpty) {
-//                                            return 'Please enter a valid email address';
-//                                          }
-//                                          if (!value.contains('@')) {
-//                                            return 'Email is invalid, must contain @';
-//                                          }
-//                                          if (!value.contains('.')) {
-//                                            return 'Email is invalid, must contain .';
-//                                          }
-//                                          return null;
-//                                        },
+                                        validator: (value) {
+                                          if (value.isEmpty) {
+                                            return 'Please enter a valid email address';
+                                          }
+                                          if (!value.contains('@')) {
+                                            return 'Email is invalid, must contain @';
+                                          }
+                                          if (!value.contains('.')) {
+                                            return 'Email is invalid, must contain .';
+                                          }
+                                          return null;
+                                        },
+                                        keyboardType: TextInputType.emailAddress,
                                         decoration: InputDecoration(
                                             border: OutlineInputBorder(),
                                             hintText: "johndoe@company.com"
@@ -608,22 +609,28 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                                         padding: EdgeInsets.all(8.0),
                                         /* splashColor: Colors.blueAccent,*/
                                         child: Text('Verify'),
-                                        onPressed: () {setState(() {
+                                        onPressed: () {
+                                          setState(() {
                                           setEmail(emailEditingController.text);
                                           setAppBody(EmailVerificationLayout());
 //                                          if (czyPrawda.prawda == false) {
 //                                            Fluttertoast.showToast(
-//                                                msg: czyPrawda.prawda.toString(),
+//                                                msg: "kappa",
 //                                                toastLength: Toast.LENGTH_LONG,
 //                                                gravity: ToastGravity.BOTTOM,
 //                                                backgroundColor: Colors.blue,
 //                                                textColor: Colors.white,
 //                                                fontSize: 16.0);
-                                          Navigator.pop(context);
+//                                          Navigator.pop(context);
 ////                                          setAppBody(EmailVerificationLayout());
 ////                                          Navigator.pop(context);
 //                                        });
                                         });
+                                        if(_formKey.currentState.validate()){
+                                          Scaffold.of(context)
+                                              .showSnackBar(SnackBar(content: Text('Processing Data')));
+                                        }
+
 
 
                                         },

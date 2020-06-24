@@ -5,8 +5,9 @@ class circularButton extends StatelessWidget{
   final double width;
   final double height;
   final Color color;
-  final Icon icon;
   final Function onClick;
+  final Icon icon;
+
 
   circularButton({this.width, this.height, this.color, this.icon, this.onClick});
 
